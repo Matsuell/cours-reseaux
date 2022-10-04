@@ -65,6 +65,8 @@ Carte Ethernet Ethernet :
    No IP because disconnected
 ```
 
+---
+
 **🌞 Affichez votre gateway**
 
 >ipconfig
@@ -75,6 +77,8 @@ Carte réseau sans fil Wi-Fi :
    Passerelle par défaut. . . . . . . . . : 10.33.19.254
 ```
 
+---
+
 **🌞 Déterminer la MAC de la passerelle**
 
 >arp -a
@@ -84,6 +88,8 @@ Interface : 10.33.16.73 --- 0x7
   Adresse Internet      Adresse physique      Type
   10.33.19.254          00-c0-e7-e0-04-4e     dynamique
 ```
+
+---
 
 ### En graphique (GUI : Graphical User Interface)
 
@@ -100,6 +106,7 @@ Adresse Physique             DC-21-5C-96-22-51
 Passerelle par défaut IPv4   10.33.19.254
 ```
 
+---
 
 ## 2. Modifications des informations
 
@@ -114,10 +121,13 @@ Adresse IP: 10.33.16.25
 Masque de sous-réseau: 255.255.252.0
 ```
 
+---
+
 🌞 **Il est possible que vous perdiez l'accès internet.** Que ce soit le cas ou non, expliquez pourquoi c'est possible de perdre son accès internet en faisant cette opération.
 
 >On perd l'accès à internet car le réseau ne parvient plus à nous identifier même si la nouvelle adresse IP reste dans le même réseau (changment du dernier octet).
 
+---
 
 # II. Exploration locale en duo
 
@@ -157,6 +167,7 @@ Cette étape pourrait paraître cruciale. En réalité, elle n'existe pas à pro
 Adresse IP: 10.10.10.155
 Masque de sous-réseau: 255.255.255.0
 ```
+---
 
 🌞 **Vérifier à l'aide d'une commande que votre IP a bien été changée**
 
@@ -168,6 +179,7 @@ Carte Ethernet Ethernet :
    Adresse IPv4. . . . . . . . . . . . . .: 10.10.10.155
    Masque de sous-réseau. . . . . . . . . : 255.255.255.0
 ```
+---
 
 🌞 **Vérifier que les deux machines se joignent**
 
@@ -188,13 +200,18 @@ Durée approximative des boucles en millisecondes :
     Minimum = 3ms, Maximum = 6ms, Moyenne = 3ms
 ```
 
+---
+
 🌞 **Déterminer l'adresse MAC de votre correspondant**
 
 > arp -a
 
+```
 Interface : 10.10.10.155 --- 0xb
   Adresse Internet      Adresse physique      Type
   10.10.10.252          b4-45-06-bf-f7-76     dynamique
+```
+---
 
 ## 4. Utilisation d'un des deux comme gateway
 
@@ -210,6 +227,8 @@ Réponse de 8.8.8.8 : octets=32 temps=23 ms TTL=113
 Réponse de 8.8.8.8 : octets=32 temps=24 ms TTL=113
 ```
 
+---
+
 🌞 **Prouver que la connexion Internet passe bien par l'autre PC**
 
 >tracert 192.168.137.1
@@ -223,6 +242,8 @@ avec un maximum de 30 sauts :
 Itinéraire déterminé.
 ```
 
+---
+
 ## 5. Petit chat privé
 
 🌞 **sur le PC *serveur*** avec par exemple l'IP 192.168.1.1
@@ -233,6 +254,7 @@ Client
 Serveur
 ```
 
+---
 🌞 **sur le PC *client*** avec par exemple l'IP 192.168.1.2
 
 >nc.exe 192.168.137.1 8888
@@ -241,6 +263,7 @@ Serveur
 Client
 Serveur
 ```
+---
 
 🌞 **Visualiser la connexion en cours**
 
@@ -251,6 +274,7 @@ Serveur
   TCP    192.168.137.1:61462   20.54.232.160:443      ESTABLISHED
   CDPUserSvc_ec5778
 ```
+---
 
 🌞 **Pour aller un peu plus loin**
 
@@ -260,6 +284,8 @@ Serveur
 netstat -a -n -b  | findstr 8888
   TCP    192.168.137.25:8888     0.0.0.0:0              LISTENING
 ```
+
+---
 ## 6. Firewall
 
 
@@ -281,7 +307,7 @@ netstat -a -n -b  | findstr 8888
     Paquets : envoyés = 4, reçus = 4, perdus = 0 (perte 0%),
 ```
 
-  
+---
 # III. Manipulations d'autres outils/protocoles côté client
 
 ## 1. DHCP
@@ -307,7 +333,7 @@ Une fois que le serveur DHCP vous a donné une IP, vous enregistrer un fichier a
 
 ```
 > Chez vous, c'est votre box qui fait serveur DHCP et qui vous donne une IP quand vous le demandez.
-
+---
 ## 2. DNS
 
 🌞** Trouver l'adresse IP du serveur DNS que connaît votre ordinateur**
@@ -319,7 +345,7 @@ Une fois que le serveur DHCP vous a donné une IP, vous enregistrer un fichier a
                                        8.8.4.4
                                        1.1.1.1
 ```
-
+---
 🌞 Utiliser, en ligne de commande l'outil `nslookup` (Windows, MacOS) ou `dig` (GNU/Linux, MacOS) pour faire des requêtes DNS à la main
 
 >nslookup google.com
@@ -362,7 +388,7 @@ Address:  8.8.8.8
 *** dns.google ne parvient pas à trouver 22.146.54.58 : Non-existent domain
 ```
 
-
+---
 # IV. Wireshark
 
 
@@ -375,6 +401,7 @@ Address:  8.8.8.8
 >ping 192.168.137.1
 
 ![Ping](./img/ping%20passerelle.png)
+
 
 **On redémarre le serveur et on s'y reconnecte**
 
