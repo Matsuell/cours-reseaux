@@ -12,8 +12,6 @@ Lorsque l'on parle de réseau, on désigne souvent par le terme *client* tout é
 
 Donc vos PCs sont des *clients*, et on va explorer leur *réseau* dans ce TP.
 
-![Big Deal](./pics/bigdeal.jpg)
-
 # Sommaire
 - [TP1 - Premier pas réseau](#tp1---premier-pas-réseau)
 - [Sommaire](#sommaire)
@@ -50,6 +48,7 @@ En utilisant la ligne de commande (CLI) de votre OS :
 **🌞 Affichez les infos des cartes réseau de votre PC**
 
 >ipconfig /all
+
 ```
 Carte réseau sans fil Wi-Fi :
 
@@ -263,22 +262,25 @@ netstat -a -n -b  | findstr 8888
 ```
 ## 6. Firewall
 
-Toujours par 2.
-
-Le but est de configurer votre firewall plutôt que de le désactiver
 
 🌞 **Activez et configurez votre firewall**
 
-- autoriser les `ping`
-  - configurer le firewall de votre OS pour accepter le `ping`
-  - aidez vous d'internet
-  - on rentrera dans l'explication dans un prochain cours mais sachez que `ping` envoie un message *ICMP de type 8* (demande d'ECHO) et reçoit un message *ICMP de type 0* (réponse d'écho) en retour
-- autoriser le traffic sur le port qu'utilise `nc`
-  - on parle bien d'ouverture de **port** TCP et/ou UDP
-  - on ne parle **PAS** d'autoriser le programme `nc`
-  - choisissez arbitrairement un port entre 1024 et 20000
-  - vous utiliserez ce port pour communiquer avec `netcat` par groupe de 2 toujours
-  - le firewall du *PC serveur* devra avoir un firewall activé et un `netcat` qui fonctionne
+>Pare-feu Windows Defender -> Paramètres avancés -> Clique droit (Règles de trafic entrant) -> Nouvelle règle -> Protocole et ports  -> TCP -> Ports locaux spécifiques :8888 -> Autoriser la connexion <br> Ensuite on défini seulement pour une adresse IP dans les propriétés de la règle.
+
+
+>ping 192.168.137.1
+
+```
+    Paquets : envoyés = 4, reçus = 4, perdus = 0 (perte 0%),
+```
+
+
+>ping 192.168.137.25
+
+```
+    Paquets : envoyés = 4, reçus = 4, perdus = 0 (perte 0%),
+```
+
   
 # III. Manipulations d'autres outils/protocoles côté client
 
@@ -295,62 +297,110 @@ Une fois que le serveur DHCP vous a donné une IP, vous enregistrer un fichier a
 
 🌞**Exploration du DHCP, depuis votre PC**
 
-- afficher l'adresse IP du serveur DHCP du réseau WiFi YNOV
-- cette adresse a une durée de vie limitée. C'est le principe du ***bail DHCP*** (ou *DHCP lease*). Trouver la date d'expiration de votre bail DHCP
-- vous pouvez vous renseigner un peu sur le fonctionnement de DHCP dans les grandes lignes. On aura un cours là dessus :)
 
+>ipconfig /all
+
+```
+   Bail obtenu. . . . . . . . . . . . . . : mardi 4 octobre 2022 13:39:45
+   Bail expirant. . . . . . . . . . . . . : mercredi 5 octobre 2022 13:39:41
+   Serveur DHCP . . . . . . . . . . . . . : 10.33.19.254
+
+```
 > Chez vous, c'est votre box qui fait serveur DHCP et qui vous donne une IP quand vous le demandez.
 
 ## 2. DNS
 
-Le protocole DNS permet la résolution de noms de domaine vers des adresses IP. Ce protocole permet d'aller sur `google.com` plutôt que de devoir connaître et utiliser l'adresse IP du serveur de Google.  
-
-Un **serveur DNS** est un serveur à qui l'on peut poser des questions (= effectuer des requêtes) sur un nom de domaine comme `google.com`, afin d'obtenir les adresses IP liées au nom de domaine.  
-
-Si votre navigateur fonctionne "normalement" (il vous permet d'aller sur `google.com` par exemple) alors votre ordinateur connaît forcément l'adresse d'un serveur DNS. Et quand vous naviguez sur internet, il effectue toutes les requêtes DNS à votre place, de façon automatique.
-
 🌞** Trouver l'adresse IP du serveur DNS que connaît votre ordinateur**
+
+>ipconfig /all
+
+```
+   Serveurs DNS. . .  . . . . . . . . . . : 8.8.8.8
+                                       8.8.4.4
+                                       1.1.1.1
+```
 
 🌞 Utiliser, en ligne de commande l'outil `nslookup` (Windows, MacOS) ou `dig` (GNU/Linux, MacOS) pour faire des requêtes DNS à la main
 
-- faites un *lookup* (*lookup* = "dis moi à quelle IP se trouve tel nom de domaine")
-  - pour `google.com`
-  - pour `ynov.com`
-  - interpréter les résultats de ces commandes
-- déterminer l'adresse IP du serveur à qui vous venez d'effectuer ces requêtes
-- faites un *reverse lookup* (= "dis moi si tu connais un nom de domaine pour telle IP")
-  - pour l'adresse `78.73.21.21`
-  - pour l'adresse `22.146.54.58`
-  - interpréter les résultats
-  - *si vous vous demandez, j'ai pris des adresses random :)*
+>nslookup google.com
+
+```
+Addresses:  2a00:1450:4007:813::200e
+          172.217.18.206
+```
+
+>nslookup ynov.com
+
+```
+Addresses:  2606:4700:20::ac43:4ae2
+          2606:4700:20::681a:ae9
+          2606:4700:20::681a:be9
+          104.26.10.233
+          104.26.11.233
+          172.67.74.226
+```
+
+Cette commande nous retourne les différentes adresse du site passé en argument, pour ynov.com il nous renvoie plusieurs adresses , car il est présent sur plusieurs serveurs.
+
+
+>nslookup 78.73.21.21
+
+```
+Serveur :   dns.google
+Address:  8.8.8.8
+
+Nom :    78-73-21-21-no168.tbcn.telia.com
+Address:  78.73.21.21
+```
+
+>nslookup 22.146.54.58
+
+```
+Serveur :   dns.google
+Address:  8.8.8.8
+
+*** dns.google ne parvient pas à trouver 22.146.54.58 : Non-existent domain
+```
+
 
 # IV. Wireshark
 
-**Wireshark est un outil qui permet de visualiser toutes les trames qui sortent et entrent d'une carte réseau.**
 
-On appelle ça un **sniffer**, ou **analyseur de trames.**
-
-![Wireshark](./pics/wireshark.jpg)
-
-Il peut :
-
-- enregistrer le trafic réseau, pour l'analyser plus tard
-- afficher le trafic réseau en temps réel
 
 **On peut TOUT voir.**
 
-Un peu austère aux premiers abords, une manipulation très basique permet d'avoir une très bonne compréhension de ce qu'il se passe réellement.
-
-➜ **[Téléchargez l'outil Wireshark](https://www.wireshark.org/).**
-
 🌞 Utilisez le pour observer les trames qui circulent entre vos deux carte Ethernet. Mettez en évidence :
 
-- un `ping` entre vous et votre passerelle
-- un `netcat` entre vous et votre mate, branché en RJ45
-- une requête DNS. Identifiez dans la capture le serveur DNS à qui vous posez la question.
-- prenez moi des screens des trames en question
-- on va prendre l'habitude d'utiliser Wireshark souvent dans les cours, pour visualiser ce qu'il se passe
 
+>ping 192.168.137.1
+
+![Ping](./img/ping%20passerelle.png)
+
+**On redémarre le serveur et on s'y reconnecte**
+
+>nc.exe -l -p 8888
+
+>nc.exe 192.168.137.1 8888 
+
+![Netcat](./img/netcat.png)
+
+>nslookup google.com
+
+![DNS](./img/dns.png)
+
+
+## 2. Bonus : avant-goût TCP et UDP
+
+🌞 **Wireshark it**
+
+```
+Adresse IP de connexion: 216.58.213.174
+Port de connexion: 443
+```
+
+![Youtube](./img/video-youtube.png)
+
+  
 # Bilan
 
 **Vu pendant le TP :**
