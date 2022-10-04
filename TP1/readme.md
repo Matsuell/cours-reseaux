@@ -123,7 +123,7 @@ Masque de sous-réseau: 255.255.252.0
 
 ---
 
-🌞 **Il est possible que vous perdiez l'accès internet.** Que ce soit le cas ou non, expliquez pourquoi c'est possible de perdre son accès internet en faisant cette opération.
+🌞 **Il est possible que vous perdiez l'accès internet. Que ce soit le cas ou non, expliquez pourquoi c'est possible de perdre son accès internet en faisant cette opération.**
 
 >On perd l'accès à internet car le réseau ne parvient plus à nous identifier même si la nouvelle adresse IP reste dans le même réseau (changment du dernier octet).
 
@@ -230,6 +230,8 @@ Réponse de 8.8.8.8 : octets=32 temps=24 ms TTL=113
 ---
 
 🌞 **Prouver que la connexion Internet passe bien par l'autre PC**
+
+>Après avoir changé d'adresse IP car lorsque l'on a partagé la connexion l'adresse IP de la carte ethernet avait changé donc il a fallu modifier celle du client pour qu'il soit dans le même réseau que le serveur.
 
 >tracert 192.168.137.1
 
