@@ -86,12 +86,15 @@ Durée approximative des boucles en millisecondes :
   10.172.89.1           b4-45-06-bf-f7-76     dynamique
 ```
 
+MAC du Bynome: ```b4-45-06-bf-f7-76```
+
 >Gateway du réseau
 
 ```
 Adresse Internet      Adresse physique      Type
 10.33.19.254          00-c0-e7-e0-04-4e     dynamique
 ```
+MAC du gateway : ```00-c0-e7-e0-04-4e ```
 
 🌞 **Manipuler la table ARP**
 
@@ -119,20 +122,22 @@ Interface : 10.172.89.2 --- 0xb
   239.255.255.250       01-00-5e-7f-ff-fa     statique
 ```
 
+Il n'y a plus l'adresse IP de notre machine ni l'adresse de broadcast.
+
 
 🌞 **Wireshark it**
 
 >Request 
 
 ```
-Adresse MAC source : 60:18:95:44:10:10 (Ma MAC)
+Adresse MAC source : 60:18:95:44:10:10 (MAC de ma machine)
 Adresse MAC de destination: ff:ff:ff:ff:ff:ff (Adresse MAC Broadcast)
 ```
 
 >Reply
 ```
 Adresse MAC source : b4:45:06:bf:f7:76 (Autre pc de la LAN)
-Adresse MAC destination: 60:18:95:44:10:10 (MA MAC)
+Adresse MAC destination: 60:18:95:44:10:10 (MAC de ma machine)
 ```
 
 🦈 **PCAP qui contient les trames ARP**
@@ -148,26 +153,26 @@ Source: ./src/ARP.pacpng
 
 >Discover
 ```
-Source: dc:21:5c:96:22:51
-Destination: ff:ff:ff:ff:ff:ff
+Source: dc:21:5c:96:22:51 (Moi)
+Destination: ff:ff:ff:ff:ff:ff (Broadcast)
 ```
 
 >Offer
 ```
-Source: 00:c0:e7:e0:04:4e
-Destination: dc:21:5c:96:22:51
+Source: 00:c0:e7:e0:04:4e 
+Destination: dc:21:5c:96:22:51 (Moi)
 ```
 
 >Request
 ```
-Source: dc:21:5c:96:22:51
-Destination: ff:ff:ff:ff:ff:ff
+Source: dc:21:5c:96:22:51 (Moi)
+Destination: ff:ff:ff:ff:ff:ff (Broadcast)
 ```
 
 >ACK
 ```
 Source: 00:c0:e7:e0:04:4e
-Destination: dc:21:5c:96:22:51
+Destination: dc:21:5c:96:22:51 (Moi)
 ```
 
 >IP à utiliser:
