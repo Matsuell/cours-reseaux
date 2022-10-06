@@ -41,7 +41,7 @@ Le lab, il vous faut deux machines :
 
 >IP1: 10.172.89.1 /22 <br>
 >IP2: 10.172.89.2 /22 <br>
->Adresse réseau: 10.172.89.0 <br>
+>Adresse réseau: 10.172.88.0 <br>
 >Adresse Broadcast: 10.172.91.255
 
 >netsh interface ip set address "Ethernet" static 10.172.89.2 255.255.252.0 
@@ -92,9 +92,11 @@ Durée approximative des boucles en millisecondes :
 Adresse Internet      Adresse physique      Type
 10.33.19.254          00-c0-e7-e0-04-4e     dynamique
 ```
+
 🌞 **Manipuler la table ARP**
 
 >arp -d
+
 Avant 
 
 ```
