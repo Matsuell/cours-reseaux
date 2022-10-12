@@ -349,6 +349,9 @@ PING 172.67.74.226 (172.67.74.226) 56(84) bytes of data.
 
 >sudo tcpdump -i enp0s8 -c 10 -w tp3_routage_internet.pcap not port 22 | ping 8.8.8.8
 
+------------------------------------------------------------------------------------------------------------------
+Je suis là
+
 | ordre | type trame | IP source          | MAC source              | IP destination     | MAC destination |     |
 |-------|------------|--------------------|-------------------------|----------------    |-----------------|-----|
 | 1     | ping       | `john` `10.3.1.11` | `john` `AA:BB:CC:DD:EE` | `8.8.8.8`          | ?               |     |
