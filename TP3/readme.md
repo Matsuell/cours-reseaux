@@ -195,8 +195,7 @@ interfaces: enp0s3 enp0s8
 ```success```
 
 >sudo firewall-cmd --add-masquerade --zone=public --permanent
-
-````success``
+```success```
 
 🌞**Ajouter les routes statiques nécessaires pour que `john` et `marcel` puissent se `ping`**
 
