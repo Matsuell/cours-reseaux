@@ -66,7 +66,7 @@ ListenPort = 51820
 SaveConfig = true
 ```
 
-## Configuration de la connexion internet du serveur:
+## Ajustement de la configuration réseau du serveur WireGuard:
 
 >sudo vi /etc/sysctl.conf
 ``` 
@@ -98,7 +98,7 @@ On active ensuite le pare-feu au démarrage de la machine et on l'allume tout de
 >sudo systemctl status firewalld
 
 
-## Configuration du firewall, autorisations des règles pour le vpn:
+## Configuration du firewall, règlz autorisant la connexion sur le port 51820 utilisé par le VPN:
 
 >sudo firewall-cmd --zone=public --add-port=51820/udp --permanent
 ```Success```
